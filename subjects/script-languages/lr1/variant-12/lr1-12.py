@@ -61,8 +61,18 @@ def task_three(n):
 
 '''
 4. Найдите три ключа с самыми высокими значениями в
-словаре my_dict = {'a':500, 'b':5874, 'c': 560,'d':400, 'e':5874, 'f': 20} – 2
-балла
+словаре my_dict = {'a':500, 'b':5874, 'c': 560,'d':400, 'e':5874, 'f': 20}
+'''
+def task_four():
+    my_dict = {'a':500, 'b':5874, 'c': 560,'d':400, 'e':5874, 'f': 20}
+    print("Словарь:", my_dict)
+    stuff = sorted(list(my_dict.items()), key=lambda x: x[1], reverse=True)
+    max_keys = [stuff[i][0] for i in range(3)]
+    print("Три ключа с самыми высокими значениями: ", end='')
+    print(*max_keys, sep=', ')
+    
+   
+'''
 5. Реализуйте программу «Ювелирный магазин», которая будет
 включать в себя шесть пунктов меню. У вас есть словарь, где ключ –
 название изделия. Значение – список, который содержит состав
@@ -96,6 +106,7 @@ while keep_going:
     elif choice == 3:
         task_three(int(input("Введите количество натуральных чисел: ")))
     elif choice == 4:
+        task_four()
         print_task_finished(4)
     elif choice == 5:
         print_task_finished(5)
