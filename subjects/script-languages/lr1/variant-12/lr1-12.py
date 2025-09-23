@@ -1,4 +1,20 @@
 import math as m
+import os
+import shutil
+
+def print_full_width_line(character):
+    """
+    Prints a line of the specified character spanning the full width of the terminal.
+    """
+    columns, _ = shutil.get_terminal_size()
+    print(character * columns)
+
+def clear_terminal():
+    os.system('cls')
+
+def print_unkown_choice():
+    print("Неизвестный выбор. Повторите попытку.")
+
 def print_task_finished(n):
     print(f"Задача №{n} завершена.")
 ''' 
@@ -89,6 +105,104 @@ def task_four():
 изначальном списке. На выходе должен быть чек из магазина.
 6. До свидания – 2 балла'''
 
+def store_menu():
+
+    print(
+"""1. Просмотр описания
+2. Просмотр цены
+3. Просмотр количества: название – количество.
+4. Всю информацию.
+5. Покупка
+6. Выход""")
+    return int(input("> "))
+def task_five():
+    to_exit = False
+    content = "Состав"
+    jew_items = {"Кольцо Prestige": ["Минималистичный дизайн подчеркивает 18 карат золота", "Золото 750 пробы", 600, 30], 
+                 "Ожерелье Elegant": ["Семь бриллиантов в сочетании с серебром создают строгий стиль", "Серебро 925 пробы, 2.1 карат бриллианта", 1800, 3], 
+                 "Серьги Classic": ["Красота кроется в простоте", "Серебро 830 пробы", 300, 40]}
+    keys = list(jew_items.keys())
+    values = list(jew_items.values())
+    while not to_exit:
+        ch = store_menu()
+        clear_terminal()
+        match ch:
+            case 1:
+                print("Описание товаров")
+                print_full_width_line('-')
+                for key in jew_items.keys():
+                    print(f"{key:<20}: {jew_items[key][0]}\n{content:<20}: {jew_items[key][1]}\n")
+            case 2:
+                print("Стоимость товаров")
+                print_full_width_line("-")
+                for key in jew_items.keys():
+                    print(f"{key:<20}:  ${jew_items[key][2]}")
+            case 3:
+                print("Количество товаров")
+                print_full_width_line("-")
+                for key in jew_items.keys():
+                    print(f"{key:<20}:  {jew_items[key][3]}")
+            case 4:
+                print("Вся информация о товарах")
+                print_full_width_line("-")
+                for key in jew_items.keys():
+                    print(f"{key:<20}: ", end='')
+                    print(*list(jew_items[key]), sep=', ')
+            case 5:
+                print("Что Вы хотите купить?")
+                i = 1
+                for key in jew_items.keys():
+                    print(f"{i} - {key:<20} - ${jew_items[key][2]} (осталось {jew_items[key][3]})")
+                    i += 1
+                to_buy = int(input("> "))                    
+                if (to_buy < 1 or to_buy > len(list(jew_items.keys()))):
+                    print_unkown_choice()
+                else:
+                    item = list(jew_items.keys())[to_buy-1]
+                    price = jew_items[item][2]
+                    total_qty = jew_items[item][3]
+                    
+                    # сделать проверку на кол-во!
+                    qty = int(input("Введите количество: "))
+                    jew_items[item][3] -= qty
+
+
+                    print(f"{item}: ${price} * {qty} = ${price*qty} (осталось: {total_qty - qty})")
+                    
+                    not_conf = True
+                    while not_conf:
+                        print("Вы уверены, что хотите совершить покупку? (Y/n)")
+                        c = input("> ")
+                        if (c == "Y" or c == "y"):
+                            clear_terminal()
+                            print("Покупка совершена успешно.")
+                            print("Чек оплаты")
+                            print("--------------------------")
+                            print(f"{item}: ${price} * {qty}")
+                            print(f"Оплачено: ${price*qty}")
+                            print("--------------------------")
+                            print("Спасибо за покупку!")
+
+
+                            not_conf = False
+                        elif (c == "N" or c == "n"):
+                            clear_terminal()
+                            print("Покупка отменена.")
+                            not_conf = False
+                        else:
+                            print_unkown_choice()
+
+
+            case 6:
+                print("До свидания!")
+                to_exit = True
+            case _:
+                print_unkown_choice()
+        
+
+'''6. Вы принимаете от пользователя последовательность чисел,
+разделённых запятой. Составьте список и кортеж с этими числами. – 1
+балл'''
 
 keep_going = True
 print("СЯП: ЛР-1, Литвинович Александр, 477901")
@@ -96,6 +210,7 @@ print("Вариант 12.")
 while keep_going:
     print("Выберите номер задания (1-6, 0 - выход)")
     choice = int(input("> "))
+    clear_terminal()
     if choice == 1:
         refine_seconds()
     elif choice == 2:
@@ -109,6 +224,7 @@ while keep_going:
         task_four()
         print_task_finished(4)
     elif choice == 5:
+        task_five()
         print_task_finished(5)
     elif choice == 6:
         print_task_finished(6)
@@ -116,4 +232,4 @@ while keep_going:
         print("Программа завершена.")
         keep_going = False        
     else:
-        print("Неизвестный выбор. Повторите попытку.")
+        print_unkown_choice()
