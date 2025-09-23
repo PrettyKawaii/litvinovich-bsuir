@@ -110,7 +110,7 @@ def store_menu():
     print(
 """1. Просмотр описания
 2. Просмотр цены
-3. Просмотр количества: название – количество.
+3. Просмотр количества
 4. Всю информацию.
 5. Покупка
 6. Выход""")
@@ -136,35 +136,50 @@ def task_five():
                 print("Стоимость товаров")
                 print_full_width_line("-")
                 for key in jew_items.keys():
-                    print(f"{key:<20}:  ${jew_items[key][2]}")
+                    print(f"{key:<20}:  ${jew_items[key][2]}\n")
             case 3:
                 print("Количество товаров")
                 print_full_width_line("-")
                 for key in jew_items.keys():
-                    print(f"{key:<20}:  {jew_items[key][3]}")
+                    print(f"{key:<20}:  {"Нет в наличии" if jew_items[key][3] == 0 else jew_items[key][3]}\n")
             case 4:
                 print("Вся информация о товарах")
                 print_full_width_line("-")
                 for key in jew_items.keys():
                     print(f"{key:<20}: ", end='')
-                    print(*list(jew_items[key]), sep=', ')
+                    print(*list(jew_items[key]), sep=', ', end='\n\n')
             case 5:
-                print("Что Вы хотите купить?")
+                print("Что Вы хотите купить? (0 - назад)")
                 i = 1
                 for key in jew_items.keys():
-                    print(f"{i} - {key:<20} - ${jew_items[key][2]} (осталось {jew_items[key][3]})")
+                    print(f"{i} - {key:<20} - ${jew_items[key][2]}", end=' ')
+                    print("(Нет в наличии)" if jew_items[key][3] == 0 else f"(осталось {jew_items[key][3]})")
                     i += 1
                 to_buy = int(input("> "))                    
-                if (to_buy < 1 or to_buy > len(list(jew_items.keys()))):
+                if (to_buy < 0 or to_buy > len(list(jew_items.keys()))):
                     print_unkown_choice()
+                elif to_buy == 0:
+                    print("Назад.")
+                elif (jew_items[list(jew_items.keys())[to_buy-1]][3] == 0):
+                    print("Данного товара нет в наличии. Выберите другой товар.")
+
                 else:
                     item = list(jew_items.keys())[to_buy-1]
                     price = jew_items[item][2]
                     total_qty = jew_items[item][3]
                     
-                    # сделать проверку на кол-во!
-                    qty = int(input("Введите количество: "))
-                    jew_items[item][3] -= qty
+                    
+                    is_correct = False
+                    while not is_correct:
+                        qty = int(input("Введите количество: "))
+                        if (qty < 1):
+                            print("Количество не может быть меньше единицы. Повторите попытку")
+                        elif (qty > total_qty):
+                            print(f"В наличии только {total_qty}! Повторите попытку.")
+                                                    
+                        else:
+                            jew_items[item][3] -= qty
+                            is_correct = True
 
 
                     print(f"{item}: ${price} * {qty} = ${price*qty} (осталось: {total_qty - qty})")
