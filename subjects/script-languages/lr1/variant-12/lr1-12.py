@@ -218,6 +218,12 @@ def task_five():
 '''6. Вы принимаете от пользователя последовательность чисел,
 разделённых запятой. Составьте список и кортеж с этими числами. – 1
 балл'''
+def task_six():
+    print("Введите последовательность чисел в формате a, b, c, ...")
+    my_list = input("> ").split(", ")
+    my_tuple = tuple(my_list)
+    print("Список:", my_list)
+    print("Кортеж:", my_tuple)
 
 keep_going = True
 print("СЯП: ЛР-1, Литвинович Александр, 477901")
@@ -242,6 +248,7 @@ while keep_going:
         task_five()
         print_task_finished(5)
     elif choice == 6:
+        task_six()
         print_task_finished(6)
     elif choice == 0:
         print("Программа завершена.")
