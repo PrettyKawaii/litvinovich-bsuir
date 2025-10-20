@@ -1,0 +1,1 @@
+f1 = open("subjects/script-languages/lr-3-12/task-1/f1.txt", "w+", encoding="utf-8")
