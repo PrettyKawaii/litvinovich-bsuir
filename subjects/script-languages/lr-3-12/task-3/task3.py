@@ -22,29 +22,31 @@ f = importlib.reload(f)
 import re
 
 
-file_s = open('subjects/script-languages/lr-3-12/task-3/subjects.txt', 'r', encoding="utf-8")
+def main():
 
-line()
-f.print_task_start(3)
-line()
-subjects = []
+    file_s = open('subjects/script-languages/lr-3-12/task-3/subjects.txt', 'r', encoding="utf-8")
 
-#print(list(file_s.readlines()))
-for subject in file_s:
-    colon_pos = subject.find(":")
-    
-    if colon_pos == -1:
-        print(f"памылка! радок не ў правільным фармаце")
-        continue   
-    
-    total_hours = sum(list(map(int, re.findall(r'\d+', subject[colon_pos:]))))
-    subjects.append([subject[:colon_pos], total_hours])
-    
-my_dict = dict(subjects)
-print("Слоўнік:", my_dict)
-line()
-f.print_task_finished(3)
-(line)
+    line()
+    f.print_task_start(3)
+    line()
+    subjects = []
 
-file_s.close
+    #print(list(file_s.readlines()))
+    for subject in file_s:
+        colon_pos = subject.find(":")
+        
+        if colon_pos == -1:
+            print(f"памылка! радок не ў правільным фармаце")
+            continue   
+        
+        total_hours = sum(list(map(int, re.findall(r'\d+', subject[colon_pos:]))))
+        subjects.append([subject[:colon_pos], total_hours])
+        
+    my_dict = dict(subjects)
+    print("Слоўнік:", my_dict)
+    line()
+    f.print_task_finished(3)
+    (line)
+
+    file_s.close
 
