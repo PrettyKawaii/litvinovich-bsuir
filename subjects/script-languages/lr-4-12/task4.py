@@ -1,6 +1,6 @@
 class BankAccount:
     bank_name = "Беларусбанк"
-    __private_var = 100000
+    private_var = 100000
 
 
     def __init__(self, owner, balance=0):
@@ -50,7 +50,7 @@ def main():
     account1 = BankAccount("Іван Іваноў", 1000)
     account2 = BankAccount("Пётр Пятроў", 500)
 
-    print("Прыватная пераменная: ", account1.__private_var)
+    print("Прыватная пераменная: ", account1.private_var)
     
     account1.deposit(300)
     account1.withdraw(200)

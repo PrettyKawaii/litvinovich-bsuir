@@ -1,7 +1,8 @@
 import sys
+import os
 import importlib
-sys.path.append('subjects/script-languages')
-
+# sys.path.append('subjects/script-languages')
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 import functions as f
 from functions import print_full_width_line as line
 f = importlib.reload(f)
