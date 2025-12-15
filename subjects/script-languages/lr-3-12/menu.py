@@ -1,25 +1,29 @@
 import sys
 import importlib
-sys.path.append('subjects/script-languages')
+import os
+
+# Получаем абсолютный путь к текущему файлу (menu.py)
+current_dir = os.path.dirname(os.path.abspath(__file__))
+# Получаем путь к директории script-languages (на уровень выше)
+script_lang_dir = os.path.dirname(current_dir)
+
+# Добавляем путь к functions.py
+sys.path.insert(0, script_lang_dir)
 
 import functions as f
 from functions import print_full_width_line as line
 f = importlib.reload(f)
 
-
-
-sys.path.append('subjects/script-languages/lr-3-12/task-1')
-sys.path.append('subjects/script-languages/lr-3-12/task-2') 
-sys.path.append('subjects/script-languages/lr-3-12/task-3')
-sys.path.append('subjects/script-languages/lr-3-12/task-4')
+# Добавляем пути к задачам (они находятся в подпапках текущей директории)
+sys.path.append(os.path.join(current_dir, 'task-1'))
+sys.path.append(os.path.join(current_dir, 'task-2'))
+sys.path.append(os.path.join(current_dir, 'task-3'))
+sys.path.append(os.path.join(current_dir, 'task-4'))
 
 import task1 as t1
 import task2 as t2
 import task3 as t3
 import task4 as t4
-
-
-
 
 line()
 f.print_lr_start(3)
@@ -33,7 +37,6 @@ def menu():
 4 - задача 4          
 0 - выхад                                    
 ''')
-
 
 keep_going = True
 
@@ -54,4 +57,3 @@ while keep_going:
         f.print_lr_end(3)
     else:
         f.print_unkown_choice()
-    

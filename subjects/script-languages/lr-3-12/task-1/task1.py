@@ -6,17 +6,24 @@
 import os
 import sys
 
-
-
 def main():
-    if not os.path.exists("task-1"):
-        os.makedirs("task-1")
+    # Получаем путь к директории, где находится task1.py
+    task_dir = os.path.dirname(os.path.abspath(__file__))
+    
+    # Создаем пути к файлам в той же директории
+    f1_path = os.path.join(task_dir, "f1.txt")
+    f2_path = os.path.join(task_dir, "f2.txt")
 
-    f1 = open("subjects/script-languages/lr-3-12/task-1/f1.txt", "w+", encoding="utf-8")
-    f2 = open("subjects/script-languages/lr-3-12/task-1/f2.txt", "w+", encoding="utf-8")
+    # Открываем файлы
+    f1 = open(f1_path, "w+", encoding="utf-8")
+    f2 = open(f2_path, "w+", encoding="utf-8")
 
+    # Импортируем get_words из functions
+    # Получаем путь к директории functions.py (на 2 уровня выше task_dir)
+    script_lang_dir = os.path.dirname(os.path.dirname(task_dir))
+    sys.path.insert(0, script_lang_dir)
+    
     from functions import get_words
-
 
     print("Задача 1.")
 
@@ -46,9 +53,15 @@ def main():
 
     f2.seek(0)
     
-    print(f"Даўжыня апошняга радка ў файле f2: {len(get_words(f2.readlines()[-1]))} слоў/слова")
-
+    # Читаем все строки и проверяем, есть ли они
+    f2_lines = f2.readlines()
+    if f2_lines:
+        print(f"Даўжыня апошняга радка ў файле f2: {len(get_words(f2_lines[-1]))} слоў/слова")
+    else:
+        print("Файл f2 пусты")
+    
     print("Канец задачы 1")
+    print(f"Файлы созданы в: {task_dir}")
 
     f1.close()
     f2.close()
